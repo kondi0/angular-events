@@ -1,0 +1,11 @@
+<h2>{{'joinevent' | translate}}</h2>
+
+<mat-dialog-content >
+  <p>{{'abouttosignup' | translate}} <strong>{{event.name}}</strong>. {{'eventtakesplace' | translate}} <strong>{{event.startDate | date: 'd MMMM'}}</strong> {{'in' | translate}} <strong>{{event.city.name}}</strong>.</p>
+  <p>{{'areyousure' | translate}}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="btn btn-sm btn-outline-primary mr-2" (click)="close()">{{'cancel' | translate}}</button>
+  <button class="btn btn-sm btn-primary" (click)="confirm()">{{'join' | translate}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$sfm-app-primary: mat-palette($mat-indigo);
+$sfm-app-accent: mat-palette($mat-blue, A200, A100, A400);
+$sfm-app-warn: mat-palette($mat-red);
+$sfm-app-theme: mat-light-theme($sfm-app-primary, $sfm-app-accent, $sfm-app-warn);
+@include angular-material-theme($sfm-app-theme);
+
+::selection {
+  background: rgba(200, 200, 255, .1);
+}
+
+body {
+  background: url("https://lh3.googleusercontent.com/un3i0rXsbTE9NuSB7eeG_JWV3lvOW-cxsf6wcoQoi_0yXyNS14F_v7tI36AYf4Y3o3I=h1264");
+}

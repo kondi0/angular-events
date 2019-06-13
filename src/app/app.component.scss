@@ -1,0 +1,19 @@
+@import "~bootstrap/scss/bootstrap";
+.main {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+@media (max-width: 767px) {
+  .main {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}

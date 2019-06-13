@@ -1,0 +1,17 @@
+<div class="main">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <a class="navbar-brand" href="#">AppEvents</a>
+    <div class="navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link"[routerLink]="['events/list']">{{'allevents' | translate}}</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link"[routerLink]="['events/my']">{{'myevents' | translate}}</a>
+        </li>
+      </ul>
+      <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()"> {{'logout' | translate}}</button>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

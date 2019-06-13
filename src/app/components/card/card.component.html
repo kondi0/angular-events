@@ -1,0 +1,35 @@
+<div class="card shadow p-3 mb-5 bg-white rounded">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-2">
+        <h3 class="title">{{event.startDate | date: 'HH:mm'}}</h3>
+      </div>
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-12">
+            <h3 class="title">{{event.name}} <p class="text-success" *ngIf="event.isFree">{{'free' | translate}}</p>
+            </h3>
+          </div>
+          <div class="col-12">
+            <p class="text">{{event.city.name}} - {{event.duration | number:'1.0-0'}} h</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 mt-3">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="button" (click)="openModal()"
+                *ngIf="!event.joined">
+          {{'signup' | translate}}
+        </button>
+        <button class="btn btn-outline-primary my-2 my-sm-0"
+                [disabled]="!showCancel"
+                (mouseover)="hoveredButton = true"
+                (mouseleave)="hoveredButton = false"
+                (click)="cancel()"
+                *ngIf="event.joined">
+          <ng-container *ngIf="!showCancel || showCancel && !hoveredButton">{{'yourein' | translate}}</ng-container>
+          <ng-container *ngIf="showCancel && hoveredButton">{{'cancel' | translate}}</ng-container>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
