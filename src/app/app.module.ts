@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
@@ -23,41 +23,48 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-      AngularFireModule.initializeApp(environment.firebase, 'app-events'),
-      AngularFirestoreModule,
-      AngularFireAuthModule,
-      AngularFireStorageModule,
-        ToastrModule.forRoot(),
-        StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([EventEffects])
-    ],
-    providers: [
-        HttpClientModule,
-        AuthService,
-        AuthGuard,
-        EventsService,
-        EventsHttpService,
-        EventsStoreService,
-        LocalstorageService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [AppComponent],
+  imports: [
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    AngularFireModule.initializeApp(environment.firebase, 'app-events'),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    ToastrModule.forRoot(),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([EventEffects])
+  ],
+  providers: [
+    HttpClientModule,
+    AuthService,
+    AuthGuard,
+    EventsService,
+    EventsHttpService,
+    EventsStoreService,
+    LocalstorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

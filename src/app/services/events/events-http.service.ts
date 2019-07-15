@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable, throwError } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Event } from '../../models/events/event.interface';
-import { forkJoin } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { City } from '../../models/cities/city.interface';
 import { EventView } from '../../models/events/event-view.interface';
 import * as moment from 'moment-timezone';
 import { LocalstorageService } from './localstorage-service';
-import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class EventsHttpService {
@@ -18,15 +15,13 @@ export class EventsHttpService {
 
     constructor(
         private http: HttpClient,
-        private feedback: ToastrService,
-        private translate: TranslateService,
         private localstorageService: LocalstorageService
     ) {}
 
     getEvents(): Observable<Array<EventView>> {
         return forkJoin(
-            this.http.get<Array<Event>>(`${this.api}/events`).pipe(catchError(() => throwError(this.errorHandler()))),
-            this.http.get<Array<Event>>(`${this.api}/cities`).pipe(catchError(() => throwError(this.errorHandler())))
+            this.http.get<Array<Event>>(`${this.api}/events`),
+            this.http.get<Array<Event>>(`${this.api}/cities`)
         ).pipe(
             map(([events, cities]: [Array<Event>, Array<City>]) => {
                 return events.map((event: Event) => this.getEventView(event, cities));
@@ -61,9 +56,4 @@ export class EventsHttpService {
             .toDate();
     }
 
-    private errorHandler(): void {
-        this.translate.get('apierror').subscribe((messageTranslation: string) => {
-            this.feedback.error(messageTranslation, 'Error');
-        });
-    }
 }

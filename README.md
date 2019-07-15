@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 
+## Installation
+
+Run `npm install` to download and install all dependencies. 
+
+## Json server 
+
+To receive response from the fake API, run `npm run json-server` in a new terminal.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

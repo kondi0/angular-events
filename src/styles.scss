@@ -7,11 +7,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 @include mat-core();
 
-$sfm-app-primary: mat-palette($mat-indigo);
-$sfm-app-accent: mat-palette($mat-blue, A200, A100, A400);
-$sfm-app-warn: mat-palette($mat-red);
-$sfm-app-theme: mat-light-theme($sfm-app-primary, $sfm-app-accent, $sfm-app-warn);
-@include angular-material-theme($sfm-app-theme);
+$event-app-primary: mat-palette($mat-indigo);
+$event-app-accent: mat-palette($mat-blue, A200, A100, A400);
+$event-app-warn: mat-palette($mat-red);
+$event-app-theme: mat-light-theme($event-app-primary, $event-app-accent, $event-app-warn);
+@include angular-material-theme($event-app-theme);
 
 ::selection {
   background: rgba(200, 200, 255, .1);
