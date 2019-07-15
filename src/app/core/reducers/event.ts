@@ -4,7 +4,7 @@ import { EventsState } from '../../models/store/events-state.interface';
 import { EventView } from '../../models/events/event-view.interface';
 import { TimeOfDay } from '../../models/filter/time-of-day.enum';
 import * as moment from 'moment-timezone';
-import { environment } from '../../../environments/environment';
+import { HOURS_FORMAT } from '../../constants/constants';
 
 const initialState: EventsState = {
     eventList: [],
@@ -21,33 +21,33 @@ export function reducer(state = initialState, action: event.Actions): EventsStat
     }
 
     function filterByTimeOfDay(timeOfDay: TimeOfDay, { startDate }: EventView): boolean {
-        const formatted = moment(moment(startDate).format(environment.hoursFormat), environment.hoursFormat);
+        const formatted = moment(moment(startDate).format(HOURS_FORMAT), HOURS_FORMAT);
         switch (timeOfDay) {
             case TimeOfDay.MORNING:
                 return formatted.isBetween(
-                    moment('05:59 am', environment.hoursFormat),
-                    moment('12:01 pm', environment.hoursFormat)
+                    moment('05:59 am', HOURS_FORMAT),
+                    moment('12:01 pm', HOURS_FORMAT)
                 );
             case TimeOfDay.AFTERNOON:
                 return formatted.isBetween(
-                    moment('11:59 am', environment.hoursFormat),
-                    moment('05:01 pm', environment.hoursFormat)
+                    moment('11:59 am', HOURS_FORMAT),
+                    moment('05:01 pm', HOURS_FORMAT)
                 );
             case TimeOfDay.EVENING:
                 return formatted.isBetween(
-                    moment('04:59 pm', environment.hoursFormat),
-                    moment('09:01 pm', environment.hoursFormat)
+                    moment('04:59 pm', HOURS_FORMAT),
+                    moment('09:01 pm', HOURS_FORMAT)
                 );
             case TimeOfDay.NIGHT:
                 return (
                     formatted.isBetween(
-                        moment('08:59 pm', environment.hoursFormat),
-                        moment('11:59 pm', environment.hoursFormat)
+                        moment('08:59 pm', HOURS_FORMAT),
+                        moment('11:59 pm', HOURS_FORMAT)
                     ) ||
-                    moment(startDate).format(environment.hoursFormat) === '12:00 am' ||
+                    moment(startDate).format(HOURS_FORMAT) === '12:00 am' ||
                     formatted.isBetween(
-                        moment('12:01 am', environment.hoursFormat),
-                        moment('06:01 am', environment.hoursFormat)
+                        moment('12:01 am', HOURS_FORMAT),
+                        moment('06:01 am', HOURS_FORMAT)
                     )
                 );
             default:

@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './services/auth/auth.service';
 import { User } from './models/auth/user.interface';
-import { environment } from '../environments/environment';
 import { EventsStoreService } from './services/events/events-store.service';
 import { ToastrService } from 'ngx-toastr';
+import { USER_INFO } from './constants/constants';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.user = JSON.parse(localStorage.getItem(environment.userInfo));
+        this.user = JSON.parse(localStorage.getItem(USER_INFO));
         this.authService.user.subscribe((user: User) => {
             this.user = { ...user };
         });

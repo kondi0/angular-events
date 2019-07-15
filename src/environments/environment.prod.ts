@@ -1,9 +1,6 @@
 export const environment = {
   production: true,
   apiUrl: 'http://localhost:3004',
-  userInfo: 'userInfo',
-  hoursFormat: 'hh:mm a',
-  joinedEvents: 'joinedEvents',
   firebase: {
     apiKey: 'AIzaSyCcuU-qChdIWOsSA9GR9fT-ZyYFFJsJwtc',
     authDomain: 'app-events-8982d.firebaseapp.com',

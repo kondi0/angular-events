@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
-    ActivatedRouteSnapshot,
-    CanActivate,
-    CanActivateChild,
-    CanLoad,
-    Route,
-    Router,
-    RouterStateSnapshot
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  CanLoad,
+  Route,
+  Router,
+  RouterStateSnapshot
 } from '@angular/router';
 import * as _ from 'lodash';
-import { environment } from '../../../environments/environment';
+import { USER_INFO } from '../../constants/constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -38,6 +38,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     private isLoggedIn(): boolean {
-        return !_.isEmpty(JSON.parse(localStorage.getItem(environment.userInfo)));
+        return !_.isEmpty(JSON.parse(localStorage.getItem(USER_INFO)));
     }
 }
