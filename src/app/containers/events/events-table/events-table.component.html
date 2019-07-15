@@ -6,10 +6,10 @@
   </div>
   <div class="row text-center" [@listAnimation]="groupedEvent.events.length">
     <div class="col-lg-12" *ngFor="let event of groupedEvent.events">
-      <card [event]="event" [showCancel]="showCancel"
+      <event-card [event]="event" [showCancel]="showCancel"
             (joinEvent)="joinEvent($event)"
             (cancelEvent)="cancelEvent($event)">
-      </card>
+      </event-card>
     </div>
   </div>
 </ng-container>

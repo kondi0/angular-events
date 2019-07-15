@@ -2,9 +2,9 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './services/auth/auth.service';
 import { User } from './models/auth/user.interface';
-import { ToastsManager } from 'ng2-toastr';
 import { environment } from '../environments/environment';
 import { EventsStoreService } from './services/events/events-store.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-root',
@@ -17,13 +17,11 @@ export class AppComponent implements OnInit {
     constructor(
         private translate: TranslateService,
         private authService: AuthService,
-        private toastr: ToastsManager,
-        private vRef: ViewContainerRef,
+        private toastr: ToastrService,
         private eventsStoreService: EventsStoreService
     ) {
         this.translate.setDefaultLang('en-UK');
         this.translate.use('en-UK');
-        this.toastr.setRootViewContainerRef(this.vRef);
     }
 
     ngOnInit(): void {

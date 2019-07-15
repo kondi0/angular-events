@@ -1,31 +1,28 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from './services/auth/auth-guard.service';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './services/auth/auth-guard.service';
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
-      {path: '', redirectTo: 'events', pathMatch: 'full'},
-      {
-        path: 'login',
-        loadChildren: 'app/containers/auth/auth.module#AuthModule'
-      },
-      {
-        path: 'events',
-        loadChildren: 'app/containers/events/events.module#EventsModule',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard]
-      }
-    ]
-  }
+    {
+        path: '',
+        children: [
+            { path: '', redirectTo: 'events', pathMatch: 'full' },
+            {
+                path: 'login',
+                loadChildren: () => import('./containers/auth/auth.module').then(module => module.AuthModule)
+            },
+            {
+                path: 'events',
+                loadChildren: () => import('./containers/events/events.module').then(module => module.EventsModule),
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard]
+            }
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  declarations: []
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

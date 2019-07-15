@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Event } from '../../models/events/event.interface';
-import { City } from '../../models/cities/city.interface';
-import { GroupedDay } from '../../models/events/grouped-day.interface';
-import * as moment from 'moment-timezone';
 import { EventView } from '../../models/events/event-view.interface';
 import { State } from '../../models/store/state.interface';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as eventSelectors from '../../core/selectors/event.selectors';
-import {FilterEvents, GetAllEvents, RemoveJoined} from '../../core/actions/event';
-import {EventFilter} from '../../models/filter/event-filter.interface';
+import { FilterEvents, GetAllEvents, RemoveJoined } from '../../core/actions/event';
+import { EventFilter } from '../../models/filter/event-filter.interface';
 
 @Injectable()
 export class EventsStoreService {

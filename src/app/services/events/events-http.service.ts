@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
 import { Event } from '../../models/events/event.interface';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { ToastsManager } from 'ng2-toastr';
+import { forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { City } from '../../models/cities/city.interface';
 import { EventView } from '../../models/events/event-view.interface';
 import * as moment from 'moment-timezone';
 import { LocalstorageService } from './localstorage-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class EventsHttpService {
@@ -18,22 +18,20 @@ export class EventsHttpService {
 
     constructor(
         private http: HttpClient,
-        private feedback: ToastsManager,
+        private feedback: ToastrService,
         private translate: TranslateService,
         private localstorageService: LocalstorageService
     ) {}
 
     getEvents(): Observable<Array<EventView>> {
         return forkJoin(
-            this.http
-                .get<Array<Event>>(`${this.api}/events`)
-                .pipe(catchError(() => Observable.throw(this.errorHandler()))),
-            this.http
-                .get<Array<Event>>(`${this.api}/cities`)
-                .pipe(catchError(() => Observable.throw(this.errorHandler())))
-        ).map(([events, cities]: [Array<Event>, Array<City>]) => {
-            return events.map((event: Event) => this.getEventView(event, cities));
-        });
+            this.http.get<Array<Event>>(`${this.api}/events`).pipe(catchError(() => throwError(this.errorHandler()))),
+            this.http.get<Array<Event>>(`${this.api}/cities`).pipe(catchError(() => throwError(this.errorHandler())))
+        ).pipe(
+            map(([events, cities]: [Array<Event>, Array<City>]) => {
+                return events.map((event: Event) => this.getEventView(event, cities));
+            })
+        );
     }
 
     private getEventView(event: Event, cities: Array<City>): EventView {

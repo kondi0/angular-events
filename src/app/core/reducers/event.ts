@@ -21,31 +21,31 @@ export function reducer(state = initialState, action: event.Actions): EventsStat
     }
 
     function filterByTimeOfDay(timeOfDay: TimeOfDay, { startDate }: EventView): boolean {
-        const fomatted = moment(moment(startDate).format(environment.hoursFormat), environment.hoursFormat);
+        const formatted = moment(moment(startDate).format(environment.hoursFormat), environment.hoursFormat);
         switch (timeOfDay) {
             case TimeOfDay.MORNING:
-                return fomatted.isBetween(
+                return formatted.isBetween(
                     moment('05:59 am', environment.hoursFormat),
                     moment('12:01 pm', environment.hoursFormat)
                 );
             case TimeOfDay.AFTERNOON:
-                return fomatted.isBetween(
+                return formatted.isBetween(
                     moment('11:59 am', environment.hoursFormat),
                     moment('05:01 pm', environment.hoursFormat)
                 );
             case TimeOfDay.EVENING:
-                return fomatted.isBetween(
+                return formatted.isBetween(
                     moment('04:59 pm', environment.hoursFormat),
                     moment('09:01 pm', environment.hoursFormat)
                 );
             case TimeOfDay.NIGHT:
                 return (
-                    fomatted.isBetween(
+                    formatted.isBetween(
                         moment('08:59 pm', environment.hoursFormat),
-                        moment('23:59 pm', environment.hoursFormat)
+                        moment('11:59 pm', environment.hoursFormat)
                     ) ||
                     moment(startDate).format(environment.hoursFormat) === '12:00 am' ||
-                    fomatted.isBetween(
+                    formatted.isBetween(
                         moment('12:01 am', environment.hoursFormat),
                         moment('06:01 am', environment.hoursFormat)
                     )
@@ -53,6 +53,12 @@ export function reducer(state = initialState, action: event.Actions): EventsStat
             default:
                 return true;
         }
+    }
+
+    function cancelEvent(id: number, eventList: Array<EventView>): Array<EventView> {
+        return eventList.map((eventView: EventView) => {
+            return eventView.id === id ? { ...eventView, joined: false } : eventView;
+        });
     }
 
     switch (action.type) {
@@ -74,12 +80,8 @@ export function reducer(state = initialState, action: event.Actions): EventsStat
         case REMOVE_JOINED_EVENT:
             return {
                 ...state,
-                eventList: [
-                    ...state.eventList.map((eventView: EventView) => {
-                        return eventView.id === action.payload ? { ...eventView, joined: false } : eventView;
-                    })
-                ],
-                filteredEvents: [...state.eventList]
+                eventList: [...cancelEvent(action.payload, state.eventList)],
+                filteredEvents: [...cancelEvent(action.payload, state.eventList)]
             };
         default:
             return state;
