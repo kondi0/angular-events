@@ -18,10 +18,11 @@ import { EventsHttpService } from './services/events/events-http.service';
 import { EventsService } from './services/events/events.service';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { AuthService } from './services/auth/auth.service';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ToastrModule } from 'ngx-toastr';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -40,9 +41,10 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule,
+      AngularFireModule.initializeApp(environment.firebase, 'app-events'),
+      AngularFirestoreModule,
+      AngularFireAuthModule,
+      AngularFireStorageModule,
         ToastrModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot([EventEffects])

@@ -1,8 +1,6 @@
 export const environment = {
   production: true,
   apiUrl: 'http://localhost:3004',
-  imageUrl: 'https://picsum.photos/1200/400?random',
-  postBodyLength: 34,
   userInfo: 'userInfo',
   hoursFormat: 'hh:mm a',
   joinedEvents: 'joinedEvents',

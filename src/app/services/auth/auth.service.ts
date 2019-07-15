@@ -1,10 +1,10 @@
 import { Injectable, NgZone } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { Subject } from 'rxjs';
 import { User } from '../../models/auth/user.interface';
 import { environment } from '../../../environments/environment';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class AuthService {
