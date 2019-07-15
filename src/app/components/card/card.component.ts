@@ -1,12 +1,11 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { Event } from '../../models/events/event.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventView } from '../../models/events/event-view.interface';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { FilterTitlePipe } from '../../pipes/filter-title.pipe';
+import { filter } from 'rxjs/operators';
 
 @Component({
-    selector: 'card',
+    selector: 'event-card',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss']
 })
@@ -30,7 +29,7 @@ export class CardComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
         dialogRef
             .afterClosed()
-            .filter((data: number) => !!data)
+            .pipe(filter((data: number) => !!data))
             .subscribe((data: number) => {
                 this.joinEvent.emit(data);
                 this.event.joined = true;

@@ -1,4 +1,4 @@
-import {EventsState} from './events-state.interface';
+import { EventsState } from './events-state.interface';
 
 export interface State {
     event: EventsState;

@@ -1,28 +1,27 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store-reducers/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { EventEffects } from './core/effects/event';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LocalstorageService } from './services/events/localstorage-service';
+import { EventsStoreService } from './services/events/events-store.service';
+import { EventsHttpService } from './services/events/events-http.service';
+import { EventsService } from './services/events/events.service';
+import { AuthGuard } from './services/auth/auth-guard.service';
+import { AuthService } from './services/auth/auth.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AuthService } from './services/auth/auth.service';
-import { AuthGuard } from './services/auth/auth-guard.service';
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
-import { reducers } from './store-reducers/reducers';
-import { StoreModule } from '@ngrx/store';
-import { EventEffects } from './core/effects/event';
-import { EffectsModule } from '@ngrx/effects';
-import { EventsService } from './services/events/events.service';
-import { EventsHttpService } from './services/events/events-http.service';
-import { EventsStoreService } from './services/events/events-store.service';
-import { EventsTableComponent } from './containers/events/events-table/events-table.component';
-import { LocalstorageService } from './services/events/localstorage-service';
-import { EventsFilterComponent } from './components/events-filter/events-filter.component';
+import { ToastrModule } from 'ngx-toastr';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -44,7 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
-        ToastModule.forRoot(),
+        ToastrModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot([EventEffects])
     ],

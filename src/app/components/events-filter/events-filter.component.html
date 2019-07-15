@@ -14,22 +14,22 @@
 </div>
 <div class="row mb-3">
   <div class="col-lg-6 col-md-12">
-    <button class="btn btn-sm" [ngClass]="{
+    <button class="btn btn-sm mr-1" [ngClass]="{
                 'btn-outline-primary': TimeOfDay.MORNING !== filter.timeOfDay,
                 'btn-primary': TimeOfDay.MORNING === filter.timeOfDay}" (click)="updateDayTime(TimeOfDay.MORNING)">
       {{'morning' | translate}}
     </button>
-    <button class="btn btn-sm" [ngClass]="{
+    <button class="btn btn-sm mr-1" [ngClass]="{
                 'btn-outline-primary': TimeOfDay.AFTERNOON !== filter.timeOfDay,
                 'btn-primary': TimeOfDay.AFTERNOON === filter.timeOfDay}" (click)="updateDayTime(TimeOfDay.AFTERNOON)">
       {{'afternoon' | translate}}
     </button>
-    <button class="btn btn-sm" [ngClass]="{
+    <button class="btn btn-sm mr-1" [ngClass]="{
                 'btn-outline-primary': TimeOfDay.EVENING !== filter.timeOfDay,
                 'btn-primary': TimeOfDay.EVENING === filter.timeOfDay}" (click)="updateDayTime(TimeOfDay.EVENING)">
       {{'evening' | translate}}
     </button>
-    <button class="btn btn-sm" [ngClass]="{
+    <button class="btn btn-sm mr-1" [ngClass]="{
                 'btn-outline-primary': TimeOfDay.NIGHT !== filter.timeOfDay,
                 'btn-primary': TimeOfDay.NIGHT === filter.timeOfDay}" (click)="updateDayTime(TimeOfDay.NIGHT)">
       {{'night' | translate}}
